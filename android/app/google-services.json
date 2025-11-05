@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "163507366913",
+    "project_id": "flpaintapp-49429",
+    "storage_bucket": "flpaintapp-49429.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:163507366913:android:b15070b2e73a98a3836400",
+        "android_client_info": {
+          "package_name": "com.example.project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDpSN9e84DOiFb4dqhzVq-0pNZVNaLzK4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
