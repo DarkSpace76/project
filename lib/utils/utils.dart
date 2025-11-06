@@ -3,8 +3,10 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:project/screens/editor_screen/components/app_canvas.dart';
+import 'package:project/server/supabase.dart';
 
 const String _patternValidationEmail = r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
 
@@ -45,9 +47,20 @@ Future<void> saveToImage() async {
         quality: 100,
         name: "custom_paint_export",
       );
+
+      SupaBaseService.instance.uploadFile(pngBytes);
+
       print("Saved: $result");
     }
   } catch (e) {
     print("Error exporting CustomPaint: $e");
   }
+}
+
+Future<ui.Image> importImage(String asset) async {
+  final data = await rootBundle.load(asset);
+  final bytes = data.buffer.asUint8List();
+  final codec = await ui.instantiateImageCodec(bytes);
+  final frame = await codec.getNextFrame();
+  return frame.image;
 }

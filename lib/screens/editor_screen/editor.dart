@@ -4,8 +4,9 @@ import 'package:project/components/bg_widget.dart';
 import 'package:project/components/color_picker.dart';
 import 'package:project/components/custom_app_bar.dart';
 import 'package:project/screens/editor_screen/components/app_canvas.dart';
+import 'package:project/screens/editor_screen/components/brush_size_dialog.dart';
+import 'package:project/screens/editor_screen/models/model_edit.dart';
 import 'package:project/styles/icons.dart';
-import 'package:project/utils/app_text.dart';
 import 'package:project/utils/utils.dart';
 
 class EditorScreen extends StatefulWidget {
@@ -18,16 +19,40 @@ class EditorScreen extends StatefulWidget {
 }
 
 class _EditorScreenState extends State<EditorScreen> {
-  Color currentColor = Colors.red;
-  bool isErease = false;
+  @override
+  void initState() {
+    super.initState();
+    Brush();
+  }
 
-  void toCreateImage() {}
+  void selectBrushTool(BuildContext ctx) {
+    setState(() {
+      Brush.instance.isErase = false;
+    });
+  }
+
+  void selectEraseTool(BuildContext ctx) {
+    setState(() {
+      Brush.instance.isErase = true;
+    });
+  }
 
   void selColorDialog(BuildContext context) {
-    showColorPicker(context, currentColor).then((color) {
+    showColorPicker(context, Brush.instance.color).then((color) {
       setState(() {
-        currentColor = color ?? Colors.red;
-        print('User selected color -> ${currentColor}');
+        Brush.instance.setColor(color);
+        print('User selected color -> ${color}');
+      });
+    });
+  }
+
+  void selectSizeDialog(BuildContext context) {
+    showPenSizeDialog(context, Brush.instance.color, Brush.instance.size).then((
+      size,
+    ) {
+      setState(() {
+        Brush.instance.setSize(size);
+        print('User selected size -> ${size}');
       });
     });
   }
@@ -65,26 +90,24 @@ class _EditorScreenState extends State<EditorScreen> {
                       ),
                       _circlBtn(iconPath: IconApp.image, onPress: (ctx) {}),
                       _circlBtn(
-                        iconPath: IconApp.pen,
-                        onPress: (ctx) {
-                          isErease = false;
-                        },
+                        iconPath: IconApp.brush,
+                        onPress: selectBrushTool,
+                        onLongPress: selectSizeDialog,
                       ),
                       _circlBtn(
                         iconPath: IconApp.erese,
-                        onPress: (ctx) {
-                          isErease = true;
-                        },
+                        onPress: selectEraseTool,
+                        onLongPress: selectSizeDialog,
                       ),
                       _circlBtn(
                         iconPath: IconApp.coloPicker,
-                        colorIcon: currentColor,
+                        colorIcon: Brush.instance.color,
                         onPress: selColorDialog,
                       ),
                     ],
                   ),
                 ),
-                Expanded(child: AppCanvas(paintColor: currentColor)),
+                Expanded(child: AppCanvas()),
               ],
             ),
           ),
@@ -98,13 +121,26 @@ Widget _circlBtn({
   required String iconPath,
   Color? colorIcon,
   required Function(BuildContext context) onPress,
+  Function(BuildContext context)? onLongPress,
 }) {
+  BoxBorder? getBorder() {
+    if ((Brush.instance.isErase && IconApp.erese.contains(iconPath)) ||
+        (!Brush.instance.isErase && IconApp.brush.contains(iconPath))) {
+      return BoxBorder.all(color: Colors.yellowAccent.withAlpha(100), width: 2);
+    }
+    return null;
+  }
+
   return ClipOval(
     child: Material(
       color: Colors.transparent,
       child: Builder(
         builder: (context) {
           return InkWell(
+            onLongPress: onLongPress != null
+                ? () => onLongPress(context)
+                : null,
+            onTap: () => onPress(context),
             borderRadius: BorderRadius.circular(360),
             child: Container(
               width: 38,
@@ -112,6 +148,7 @@ Widget _circlBtn({
               decoration: BoxDecoration(
                 color: Colors.white.withAlpha(50),
                 borderRadius: BorderRadius.circular(360),
+                border: getBorder(),
               ),
               child: SvgPicture.asset(
                 iconPath,
@@ -124,7 +161,6 @@ Widget _circlBtn({
                 ),
               ),
             ),
-            onTap: () => onPress(context),
           );
         },
       ),

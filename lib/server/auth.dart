@@ -64,4 +64,8 @@ class AuthorizationService {
   }
 
   void saveParams() {}
+
+  String? getuserUid() {
+    return FirebaseAuth.instance.currentUser?.uid;
+  }
 }

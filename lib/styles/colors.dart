@@ -24,3 +24,6 @@ const shadowdColor2 = Color.fromRGBO(19, 19, 19, 1);
 const appbarShadowdColor1 = Color.fromRGBO(227, 227, 227, 0.233);
 const appBarShadowdColor2 = Color.fromRGBO(18, 7, 23, 1);
 const appbarColorTitle = Color.fromRGBO(238, 238, 238, 1);
+
+//dialog Color
+const bgModalColor = Color.fromRGBO(153, 153, 153, 0.97);

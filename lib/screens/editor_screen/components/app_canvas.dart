@@ -3,33 +3,26 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:project/screens/editor_screen/models/model_edit.dart';
+import 'package:project/utils/utils.dart';
 
 GlobalKey repaintKey = GlobalKey();
 
 class AppCanvas extends StatefulWidget {
-  Color paintColor;
-  AppCanvas({super.key, required this.paintColor});
+  AppCanvas({super.key});
 
   @override
   _AppCanvasState createState() => _AppCanvasState();
 }
 
 class _AppCanvasState extends State<AppCanvas> {
-  List<Pen> lines = [];
+  List<PointsArray> lines = [];
   List<Offset> pointsDraw = [];
   ui.Image? image;
-
-  Future<ui.Image> importImage(String asset) async {
-    final data = await rootBundle.load(asset);
-    final bytes = data.buffer.asUint8List();
-    final codec = await ui.instantiateImageCodec(bytes);
-    final frame = await codec.getNextFrame();
-    return frame.image;
-  }
 
   @override
   void initState() {
     super.initState();
+
     importImage('assets/test.jpg').then((img) {
       setState(() {
         image = img;
@@ -51,7 +44,13 @@ class _AppCanvasState extends State<AppCanvas> {
           builder: (context, constraints) => GestureDetector(
             onPanStart: (_) {
               pointsDraw = [];
-              lines.add(Pen(points: pointsDraw, color: widget.paintColor));
+              lines.add(
+                PointsArray(
+                  points: pointsDraw,
+                  color: Brush.instance.color,
+                  brushSize: Brush.instance.size,
+                ),
+              );
             },
             onPanUpdate: (details) {
               setState(() {
@@ -81,10 +80,10 @@ class _AppCanvasState extends State<AppCanvas> {
 }
 
 class Painter extends CustomPainter {
-  final List<Pen> lines;
+  final List<PointsArray> points;
   final ui.Image? image;
 
-  Painter(this.lines, {this.image});
+  Painter(this.points, {this.image});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -98,16 +97,16 @@ class Painter extends CustomPainter {
       );
     }
 
-    for (var line in lines) {
+    for (var point in points) {
       final paint = Paint()
-        ..color = line.color
-        ..strokeWidth = 4.0
+        ..color = point.color
+        ..strokeWidth = point.brushSize
         ..strokeCap = StrokeCap.round;
 
-      for (int i = 0; i < line.points.length - 1; i++) {
-        if (line.points[i] != Offset.infinite &&
-            line.points[i + 1] != Offset.infinite) {
-          canvas.drawLine(line.points[i], line.points[i + 1], paint);
+      for (int i = 0; i < point.points.length - 1; i++) {
+        if (point.points[i] != Offset.infinite &&
+            point.points[i + 1] != Offset.infinite) {
+          canvas.drawLine(point.points[i], point.points[i + 1], paint);
         }
       }
     }

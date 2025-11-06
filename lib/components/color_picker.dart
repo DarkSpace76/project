@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:project/styles/colors.dart';
 import 'package:project/styles/icons.dart';
 
 const List<MaterialColor> _primariesColor = <MaterialColor>[
@@ -128,7 +129,6 @@ Future<Color?> showColorPicker(
 ) async {
   final RenderBox button = btnContext.findRenderObject() as RenderBox;
   final Offset offset = button.localToGlobal(Offset.zero);
-  const bgColor = Color.fromRGBO(153, 153, 153, 0.97);
 
   void selectColorCallback(Color? select) {
     Get.back<Color>(result: select);
@@ -144,7 +144,7 @@ Future<Color?> showColorPicker(
             offset: Offset(offset.dx - 13, offset.dy),
             child: SvgPicture.asset(
               IconApp.arrowClip,
-              colorFilter: ColorFilter.mode(bgColor, BlendMode.srcIn),
+              colorFilter: ColorFilter.mode(bgModalColor, BlendMode.srcIn),
               width: 47,
               height: 13,
             ),
@@ -154,7 +154,7 @@ Future<Color?> showColorPicker(
             top: offset.dy + 13,
             child: Material(
               borderRadius: BorderRadius.circular(16),
-              color: bgColor,
+              color: bgModalColor,
               elevation: 4,
               child: Container(
                 padding: EdgeInsets.all(16),
