@@ -95,7 +95,7 @@ Future<double?> showPenSizeDialog(
               child: Container(
                 padding: EdgeInsets.all(16),
                 width: 24 * 13, //padding 16+16
-                height: 24 * 11 + 32,
+                height: 180,
                 child: BrushSelectSize(
                   currentColor: curentColor,
                   onChangeEnd: selectSize,
