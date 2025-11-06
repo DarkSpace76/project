@@ -13,4 +13,21 @@
 Для хранения картинов на сервере использован SupaBase сервис
 Данные о пользователе и его списке галереии хранятся в FireBase DataBase
 
+Экран входа и валидация
+<img width="370" height="757" alt="Снимок экрана 2025-11-07 в 01 49 50" src="https://github.com/user-attachments/assets/ccb457bc-2b18-436b-97e2-1113fd29e599" />
+
+Экран регистрации
+<img width="370" height="783" alt="Снимок экрана 2025-11-07 в 01 51 34" src="https://github.com/user-attachments/assets/309af0c6-94d7-4bf9-baee-cedbaf96dffe" />
+
+Галереия пользователя
+<img width="371" height="801" alt="Снимок экрана 2025-11-07 в 01 52 29" src="https://github.com/user-attachments/assets/31e5b9c0-f2e3-40f4-89b7-9d2db242c578" />
+
+Редактор
+<img width="365" height="794" alt="Снимок экрана 2025-11-07 в 01 53 04" src="https://github.com/user-attachments/assets/a525ae5c-8ee4-4a9e-a87c-4a655b491528" />
+
+Для выбора кисти или ластика осуществить один клик по кнопке, для выбора размера кисти или ластика долгое нажатие на кнопку, после чего откроется диалог 
+<img width="387" height="274" alt="Снимок экрана 2025-11-07 в 01 55 15" src="https://github.com/user-attachments/assets/352b7e77-78df-4858-b908-0fbd29da65a5" />
+
+Для сохранения изображения нажать кнопку подтверждения в appBar , после чего будет осуществлен возврат в галерею и получено пуш уведомление о успешном сохранении картинки в галерею телефона и загрузке на сервер  
+<img width="400" height="794" alt="Снимок экрана 2025-11-07 в 01 56 10" src="https://github.com/user-attachments/assets/2c087fb1-d49c-4a88-984d-35a2dd2b55cf" />
 
