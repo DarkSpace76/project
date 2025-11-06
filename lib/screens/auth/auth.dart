@@ -50,7 +50,7 @@ class _AuthScreenState extends State<AuthScreen> {
         Get.snackbar('Вход', 'Произошла непредвиденная ошибка');
       } finally {}
     } else {
-      print('Ошибка формы регистрации');
+      print('Registration form error');
     }
   }
 

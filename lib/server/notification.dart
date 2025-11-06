@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:project/utils/app_text.dart';
 
 class NotificationService {
   static final FlutterLocalNotificationsPlugin notifications =
@@ -36,7 +37,7 @@ class NotificationService {
   }
 
   static Future<void> showNotification({
-    required String title,
+    String title = titleApp,
     required String body,
     int id = 0,
   }) async {

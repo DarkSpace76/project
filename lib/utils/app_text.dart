@@ -1,3 +1,5 @@
+const titleApp = 'Easy Paint';
+
 const titleAuthBtn = 'Войти';
 const titleRegBtn = 'Регистрация';
 

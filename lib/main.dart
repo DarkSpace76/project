@@ -6,6 +6,7 @@ import 'package:project/screens/SplashScreen/splash_screen.dart';
 import 'package:project/screens/editor_screen/editor.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:project/server/auth.dart';
+import 'package:project/server/firebase.dart';
 import 'package:project/server/notification.dart';
 import 'package:project/server/supabase.dart';
 import 'package:project/utils/const.dart';
@@ -19,7 +20,7 @@ void main() async {
   await NotificationService.initialize();
   await dotenv.load(fileName: "assets/opt.env");
   SupaBaseService();
-
+  FirestoreService();
   AuthorizationService();
   runApp(const MyApp());
 }

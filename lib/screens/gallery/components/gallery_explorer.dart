@@ -1,8 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:project/screens/gallery/model/image.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-Widget gallery(List<String> imgaes) {
+Widget gallery(List<AppImamge> imgaes) {
   return GridView.builder(
     padding: EdgeInsets.only(top: 16),
     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -17,7 +19,27 @@ Widget gallery(List<String> imgaes) {
         height: 156,
         child: ClipRRect(
           borderRadius: BorderRadiusGeometry.circular(16),
-          child: Image.asset(imgaes[i], fit: BoxFit.fill),
+          child: Image.network(
+            imgaes[i].url ?? '',
+            fit: BoxFit.fill,
+            loadingBuilder:
+                (
+                  BuildContext context,
+                  Widget child,
+                  ImageChunkEvent? loadingProgress,
+                ) {
+                  if (loadingProgress == null) {
+                    return child;
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value:
+                          loadingProgress.cumulativeBytesLoaded /
+                          (loadingProgress.expectedTotalBytes ?? 1),
+                    ),
+                  );
+                },
+          ),
         ),
       );
     },

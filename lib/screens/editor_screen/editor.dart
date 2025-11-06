@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:project/components/bg_widget.dart';
 import 'package:project/components/color_picker.dart';
 import 'package:project/components/custom_app_bar.dart';
@@ -67,6 +68,7 @@ class _EditorScreenState extends State<EditorScreen> {
         appBar: customAppBar(
           caption: widget.titleScreen,
           leadingIcon: IconApp.back,
+          onLeadingPress: () => Get.back(),
           confirm: IconApp.confirm,
         ),
         body: SafeArea(

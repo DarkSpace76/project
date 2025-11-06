@@ -22,12 +22,6 @@ class _AppCanvasState extends State<AppCanvas> {
   @override
   void initState() {
     super.initState();
-
-    importImage('assets/test.jpg').then((img) {
-      setState(() {
-        image = img;
-      });
-    });
   }
 
   @override
