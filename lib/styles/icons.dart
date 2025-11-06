@@ -4,6 +4,7 @@ class IconApp {
   static const logout = '${_basicPath}logout.svg';
   static const back = '${_basicPath}arrow_left.svg';
   static const confirm = '${_basicPath}check.svg';
+  static const repaint = '${_basicPath}repaint.svg';
 
   /* Editor Screen */
   static const exportImage = '${_basicPath}export.svg';

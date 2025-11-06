@@ -5,6 +5,8 @@ import 'package:project/components/button.dart';
 import 'package:project/components/card.dart';
 import 'package:project/components/style_title_form.dart';
 import 'package:project/screens/gallery/gallery.dart';
+import 'package:project/server/auth.dart';
+import 'package:project/styles/colors.dart';
 import 'package:project/utils/app_text.dart';
 import 'package:project/utils/const.dart';
 import 'package:project/utils/utils.dart';
@@ -61,7 +63,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   void toNextForm() {
     if (_regFormKey.currentState!.validate()) {
-      Get.to(GalleryScreen());
+      if (pasController.text == pasConfController.text) {
+        AuthorizationService.instance
+            .createUserWithEmailAndPassword(
+              emailController.text,
+              pasConfController.text,
+            )
+            .then((credential) {
+              Get.to(GalleryScreen());
+            });
+      } else {
+        Get.snackbar(
+          'Регистрация',
+          'Пароли не совпадают',
+          colorText: appbarColorTitle,
+        );
+      }
     } else {
       print('Error in the registration form data');
     }

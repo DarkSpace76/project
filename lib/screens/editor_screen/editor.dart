@@ -9,7 +9,9 @@ import 'package:project/utils/app_text.dart';
 import 'package:project/utils/utils.dart';
 
 class EditorScreen extends StatefulWidget {
-  EditorScreen({super.key});
+  String? titleScreen;
+  String? imagePath;
+  EditorScreen({super.key, this.titleScreen, this.imagePath});
 
   @override
   State<EditorScreen> createState() => _EditorScreenState();
@@ -37,7 +39,7 @@ class _EditorScreenState extends State<EditorScreen> {
         backgroundColor: Colors.transparent,
         extendBodyBehindAppBar: true, //
         appBar: customAppBar(
-          caption: captionEditorNew,
+          caption: widget.titleScreen,
           leadingIcon: IconApp.back,
           confirm: IconApp.confirm,
         ),

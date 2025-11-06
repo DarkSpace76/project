@@ -39,6 +39,9 @@ dependencies:
   flutter_svg: ^2.2.1
   image_gallery_saver: ^2.0.3
   firebase_auth: ^6.1.2
+  supabase_flutter: ^2.0.0
+
+
 
 
 dev_dependencies:

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project/components/bg_widget.dart';
@@ -5,7 +6,10 @@ import 'package:project/components/button.dart';
 import 'package:project/components/card.dart';
 import 'package:project/components/style_title_form.dart';
 import 'package:project/screens/auth/controller/auth_controller.dart';
+import 'package:project/screens/gallery/gallery.dart';
 import 'package:project/screens/registration/registratoion.dart';
+import 'package:project/server/auth.dart';
+import 'package:project/styles/colors.dart';
 import 'package:project/utils/app_text.dart';
 import 'package:project/utils/const.dart';
 import 'package:project/utils/utils.dart';
@@ -22,9 +26,29 @@ class _AuthScreenState extends State<AuthScreen> {
 
   final _authKeyForm = GlobalKey<FormState>();
 
-  void toAuth() {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passController = TextEditingController();
+
+  void toAuth() async {
     if (_authKeyForm.currentState!.validate()) {
-      //todo
+      try {
+        final user = await AuthorizationService.instance
+            .signInWithEmailAndPassword(
+              emailController.text,
+              passController.text,
+            );
+        if (user != null) {
+          Get.to(GalleryScreen());
+        }
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          Get.snackbar('Вход', 'Пользователь с таким email не найден');
+        } else if (e.code == 'wrong-password') {
+          Get.snackbar('Вход', 'Неверный пароль');
+        }
+      } catch (e) {
+        Get.snackbar('Вход', 'Произошла непредвиденная ошибка');
+      } finally {}
     } else {
       print('Ошибка формы регистрации');
     }
@@ -58,12 +82,14 @@ class _AuthScreenState extends State<AuthScreen> {
                       children: [
                         styleTitleForm(title: titleAuthForm),
                         card(
+                          controller: emailController,
                           title: titleEmail,
                           hint: hintAuthEmail,
                           keyboardType: TextInputType.emailAddress,
                           validator: emailValidator,
                         ),
                         card(
+                          controller: passController,
                           title: titlePass,
                           hint: hintAuthPass,
                           obscureText: true,
