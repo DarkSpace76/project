@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:project/components/bg_widget.dart';
 import 'package:project/components/color_picker.dart';
 import 'package:project/components/custom_app_bar.dart';
 import 'package:project/screens/editor_screen/components/app_canvas.dart';
 import 'package:project/screens/editor_screen/components/brush_size_dialog.dart';
 import 'package:project/screens/editor_screen/models/model_edit.dart';
+import 'package:project/screens/gallery/gallery.dart';
 import 'package:project/server/notification.dart';
 import 'package:project/styles/icons.dart';
 import 'package:project/utils/utils.dart';
@@ -70,6 +72,10 @@ class _EditorScreenState extends State<EditorScreen> {
           leadingIcon: IconApp.back,
           onLeadingPress: () => Get.back(),
           confirm: IconApp.confirm,
+          onConfirmPress: () async {
+            await saveToImage();
+            Get.back<bool>(result: true);
+          },
         ),
         body: SafeArea(
           child: Container(
@@ -89,10 +95,7 @@ class _EditorScreenState extends State<EditorScreen> {
                         iconPath: IconApp.exportImage,
                         onPress: (ctx) {},
                       ),
-                      _circlBtn(
-                        iconPath: IconApp.image,
-                        onPress: (ctx) => saveToImage(),
-                      ),
+                      _circlBtn(iconPath: IconApp.image, onPress: (ctx) {}),
                       _circlBtn(
                         iconPath: IconApp.brush,
                         onPress: selectBrushTool,

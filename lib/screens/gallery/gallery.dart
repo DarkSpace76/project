@@ -30,12 +30,16 @@ class _GalleryScreenState extends State<GalleryScreen> {
     super.initState();
   }
 
-  void toCreateImage() {
-    Get.to(() => EditorScreen(titleScreen: captionEditorNew));
+  void toCreateImage() async {
+    Get.to(() => EditorScreen(titleScreen: captionEditorNew))?.then((data) {
+      setState(() {});
+    });
   }
 
-  void toRepaintImage() {
-    Get.to(() => EditorScreen(titleScreen: captionEditorEdit));
+  void toRepaintImage() async {
+    Get.to(() => EditorScreen(titleScreen: captionEditorEdit))?.then((data) {
+      setState(() {});
+    });
   }
 
   @override
