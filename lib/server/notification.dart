@@ -40,22 +40,15 @@ class NotificationService {
     required String body,
     int id = 0,
   }) async {
-    const AndroidNotificationDetails androidDetails =
-        AndroidNotificationDetails(
-          'main_channel',
-          'Main Channel',
-          channelDescription: 'Main notifications channel',
-          importance: Importance.max,
-          priority: Priority.high,
-        );
-
-    const DarwinNotificationDetails iosDetails = DarwinNotificationDetails();
-
-    const NotificationDetails details = NotificationDetails(
-      android: androidDetails,
-      iOS: iosDetails,
+    final notificationDetails = NotificationDetails(
+      iOS: DarwinNotificationDetails(),
     );
-
-    await notifications.show(id, title, body, details);
+    await NotificationService.notifications.show(
+      id,
+      title,
+      body,
+      notificationDetails,
+      payload: 'easy_paint',
+    );
   }
 }

@@ -40,6 +40,8 @@ Future<void> saveToImage() async {
     ui.Image image = await boundary.toImage(pixelRatio: 3.0);
     ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
 
+    String fileName = 'easypaint_${DateTime.now().millisecondsSinceEpoch}.png';
+
     if (byteData != null) {
       Uint8List pngBytes = byteData.buffer.asUint8List();
 
@@ -47,15 +49,15 @@ Future<void> saveToImage() async {
       final result = await ImageGallerySaver.saveImage(
         pngBytes,
         quality: 100,
-        name: "custom_paint_export",
+        name: fileName,
       );
 
-      SupaBaseService.instance.uploadFile(pngBytes);
+      SupaBaseService.instance.uploadFile(pngBytes, fileName);
 
       print("Saved: $result");
     }
   } catch (e) {
-    print("Error exporting CustomPaint: $e");
+    print("Error save image: $e");
   }
 }
 
@@ -65,26 +67,4 @@ Future<ui.Image> importImage(String asset) async {
   final codec = await ui.instantiateImageCodec(bytes);
   final frame = await codec.getNextFrame();
   return frame.image;
-}
-
-Future<void> showNotification() async {
-  const AndroidNotificationDetails androidNotificationDetails =
-      AndroidNotificationDetails(
-        'your channel id',
-        'your channel name',
-        channelDescription: 'your channel description',
-        importance: Importance.max,
-        priority: Priority.high,
-        ticker: 'ticker',
-      );
-  const NotificationDetails notificationDetails = NotificationDetails(
-    android: androidNotificationDetails,
-  );
-  await NotificationService.notifications.show(
-    0,
-    'plain title',
-    'plain body',
-    notificationDetails,
-    payload: 'item x',
-  );
 }

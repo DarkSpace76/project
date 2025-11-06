@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:project/main.dart';
 import 'package:project/server/auth.dart';
+import 'package:project/server/notification.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupaBaseService {
@@ -28,9 +29,7 @@ class SupaBaseService {
   }
 
   // Upload file using standard upload
-  Future<void> uploadFile(Uint8List data) async {
-    String fileName =
-        'custom_paint_${DateTime.now().millisecondsSinceEpoch}.png';
+  Future<void> uploadFile(Uint8List data, String fileName) async {
     final tempDir = Directory.systemTemp;
     final uploadFile = File('${tempDir.path}/$fileName');
 
@@ -50,19 +49,18 @@ class SupaBaseService {
               uploadFile,
               fileOptions: FileOptions(contentType: 'image/png', upsert: false),
             );
+
+        NotificationService.showNotification(
+          title: 'Easy Paint',
+          body: 'Картинка сохранена и загружена на сервер',
+        );
+
         print("Successfully uploaded to Supabase: $fileName");
-
-        // Получаем публичный URL
-        final String publicUrl = client.storage
-            .from(uid)
-            .getPublicUrl(fileName);
-
-        print("Public URL: $publicUrl");
       }
     } catch (e) {
       print('Error uploads image to bucket: ${e}}');
     } finally {
-      if (uploadFile != null && await uploadFile.exists()) {
+      if (await uploadFile.exists()) {
         await uploadFile.delete();
       }
     }
