@@ -6,6 +6,7 @@ import 'package:project/screens/SplashScreen/splash_screen.dart';
 import 'package:project/screens/editor_screen/editor.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:project/server/auth.dart';
+import 'package:project/server/notification.dart';
 import 'package:project/server/supabase.dart';
 import 'package:project/utils/const.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -15,6 +16,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await NotificationService.initialize();
   await dotenv.load(fileName: "assets/opt.env");
   SupaBaseService();
 

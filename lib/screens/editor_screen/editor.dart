@@ -85,10 +85,13 @@ class _EditorScreenState extends State<EditorScreen> {
                       _circlBtn(
                         iconPath: IconApp.exportImage,
                         onPress: (ctx) {
-                          saveToImage();
+                          showNotification();
                         },
                       ),
-                      _circlBtn(iconPath: IconApp.image, onPress: (ctx) {}),
+                      _circlBtn(
+                        iconPath: IconApp.image,
+                        onPress: (ctx) => saveToImage(),
+                      ),
                       _circlBtn(
                         iconPath: IconApp.brush,
                         onPress: selectBrushTool,

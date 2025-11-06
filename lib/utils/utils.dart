@@ -4,8 +4,10 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:project/screens/editor_screen/components/app_canvas.dart';
+import 'package:project/server/notification.dart';
 import 'package:project/server/supabase.dart';
 
 const String _patternValidationEmail = r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
@@ -63,4 +65,26 @@ Future<ui.Image> importImage(String asset) async {
   final codec = await ui.instantiateImageCodec(bytes);
   final frame = await codec.getNextFrame();
   return frame.image;
+}
+
+Future<void> showNotification() async {
+  const AndroidNotificationDetails androidNotificationDetails =
+      AndroidNotificationDetails(
+        'your channel id',
+        'your channel name',
+        channelDescription: 'your channel description',
+        importance: Importance.max,
+        priority: Priority.high,
+        ticker: 'ticker',
+      );
+  const NotificationDetails notificationDetails = NotificationDetails(
+    android: androidNotificationDetails,
+  );
+  await NotificationService.notifications.show(
+    0,
+    'plain title',
+    'plain body',
+    notificationDetails,
+    payload: 'item x',
+  );
 }
