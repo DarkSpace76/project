@@ -1,16 +1,16 @@
-# project
 
-A new Flutter project.
+Цель задания
+Создать мобильное iOS-приложение на Flutter с интеграцией Firebase, включающее:
+0. Авторизацию и регистрацию через email.
+1. Холст для рисования с импортом изображений из галереи.
+2. Экспорт и сохранение изображения.
+3. Хранение изображений в Firebase.
+4. Информирование о сохранении изображения (уведомления).
+5. Использование макетов из Figma.
 
-## Getting Started
+Для управления состоянием плагин GetX
+Авторизация firebase через Email
+Для хранения картинов на сервере использован SupaBase сервис
+Данные о пользователе и его списке галереии хранятся в FireBase DataBase
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
