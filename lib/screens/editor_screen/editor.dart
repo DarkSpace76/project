@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -27,6 +29,13 @@ class _EditorScreenState extends State<EditorScreen> {
   void initState() {
     super.initState();
     Brush();
+  }
+
+  void imagePicker(BuildContext context) async {
+    final ui.Image? image = await importImageFromDevice();
+    if (image != null && canvaKey.currentState != null) {
+      canvaKey.currentState!.setImage(image);
+    }
   }
 
   void selectBrushTool(BuildContext ctx) {
@@ -93,9 +102,11 @@ class _EditorScreenState extends State<EditorScreen> {
                     children: [
                       _circlBtn(
                         iconPath: IconApp.exportImage,
-                        onPress: (ctx) {},
+                        onPress: (ctx) async {
+                          await shareImage(ctx);
+                        },
                       ),
-                      _circlBtn(iconPath: IconApp.image, onPress: (ctx) {}),
+                      _circlBtn(iconPath: IconApp.image, onPress: imagePicker),
                       _circlBtn(
                         iconPath: IconApp.brush,
                         onPress: selectBrushTool,
@@ -114,7 +125,7 @@ class _EditorScreenState extends State<EditorScreen> {
                     ],
                   ),
                 ),
-                Expanded(child: AppCanvas()),
+                Expanded(child: AppCanvas(key: canvaKey)),
               ],
             ),
           ),

@@ -6,6 +6,7 @@ import 'package:project/screens/editor_screen/models/model_edit.dart';
 import 'package:project/utils/utils.dart';
 
 GlobalKey repaintKey = GlobalKey();
+GlobalKey<_AppCanvasState> canvaKey = GlobalKey<_AppCanvasState>();
 
 class AppCanvas extends StatefulWidget {
   AppCanvas({super.key});
@@ -22,6 +23,12 @@ class _AppCanvasState extends State<AppCanvas> {
   @override
   void initState() {
     super.initState();
+  }
+
+  void setImage(ui.Image? importImage) {
+    setState(() {
+      image = importImage;
+    });
   }
 
   @override
@@ -82,7 +89,6 @@ class Painter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     if (image != null) {
-      // Рисуем изображение на всю площадь canvas
       paintImage(
         canvas: canvas,
         rect: Rect.fromLTWH(0, 0, size.width, size.height),
