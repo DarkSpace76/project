@@ -32,8 +32,8 @@
 <img width="400" height="794" alt="Снимок экрана 2025-11-07 в 01 56 10" src="https://github.com/user-attachments/assets/2c087fb1-d49c-4a88-984d-35a2dd2b55cf" />
 
 Для установки зависимостей выполнить следющие шаги в терминале папки проекта 
-flutter pub get
-cd ios
-pod install
-cd ..
-Flutter run
+ - flutter pub get
+ - cd ios
+ - pod install
+ - cd ..
+ - Flutter run
